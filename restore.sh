@@ -122,7 +122,7 @@ else
     case "$SELECTION" in
         '' | *[!0-9]*)
             log_error "Invalid selection."
-            exit 1 
+            exit 1
             ;;
     esac
     
@@ -150,16 +150,16 @@ printf "Are you sure? (y/N): "
 read -r CONFIRM
 case "$CONFIRM" in
     [yY]*) ;;
-    *) 
+    *)
         log_info "Operation cancelled."
-        exit 0 
+        exit 0
         ;;
 esac
 
 # 4. Mount EFI
 # Mount the selected EFI partition to access its contents.
 log_info "Mounting $TARGET_DISK..."
-diskutil mount "$TARGET_DISK" > /dev/null
+diskutil mount "$TARGET_DISK" >/dev/null
 if [ $? -ne 0 ]; then
     log_error "Failed to mount $TARGET_DISK"
     exit 1
