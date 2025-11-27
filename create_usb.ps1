@@ -58,7 +58,8 @@ if ($null -eq $usbDisks -or $usbDisks.Count -eq 0) {
     $showAll = Read-Host "Do you want to list ALL disks (including internal)? (y/n)"
     if ($showAll -eq 'y') {
         $usbDisks = Get-Disk
-    } else {
+    }
+    else {
         exit 0
     }
 }
@@ -136,7 +137,8 @@ try {
     Write-Success "Done! OpenCore USB created successfully."
     Write-Info "You can now boot from this USB drive."
 
-} catch {
+}
+catch {
     Write-Error "An error occurred: $($_.Exception.Message)"
     exit 1
 }
