@@ -15,7 +15,7 @@
 # ==============================================================================
 
 # Ensure we are running from the tests directory
-cd "$(dirname "$0")"
+cd "$(dirname "$0")" || exit 1
 
 # --- Setup Mock Environment ---
 TEST_DIR="./test_env"
@@ -41,7 +41,7 @@ export PATH="$PWD/$MOCK_BIN:$PATH"
 # --- Mock Commands ---
 
 # Mock diskutil
-cat << 'EOF' > "$MOCK_BIN/diskutil"
+cat <<'EOF' >"$MOCK_BIN/diskutil"
 #!/bin/sh
 if [ "$1" = "list" ]; then
     echo "/dev/disk0 (GUID Partition Scheme)"
@@ -59,21 +59,21 @@ chmod +x "$MOCK_BIN/diskutil"
 
 # Mock mount (for check)
 # Will be overwritten later with correct path
-cat << 'EOF' > "$MOCK_BIN/mount"
+cat <<'EOF' >"$MOCK_BIN/mount"
 #!/bin/sh
 echo "mount mock"
 EOF
 chmod +x "$MOCK_BIN/mount"
 
 # Mock nvram
-cat << 'EOF' > "$MOCK_BIN/nvram"
+cat <<'EOF' >"$MOCK_BIN/nvram"
 #!/bin/sh
 echo "nvram: clearing..."
 EOF
 chmod +x "$MOCK_BIN/nvram"
 
 # Mock shutdown
-cat << 'EOF' > "$MOCK_BIN/shutdown"
+cat <<'EOF' >"$MOCK_BIN/shutdown"
 #!/bin/sh
 echo "shutdown: system halting..."
 EOF
@@ -112,19 +112,19 @@ RUNTIME_MOCK_VOLUMES="./Volumes"
 # Replace /Volumes/EFI with our mock path
 # Use | as delimiter to avoid escaping slashes
 # We replace the whole line to be safe
-sed "s|EFI_MOUNT_POINT=\"/Volumes/EFI\"|EFI_MOUNT_POINT=\"$RUNTIME_MOCK_VOLUMES/EFI\"|g" "$TEST_DIR/restore.sh" > "$TEST_DIR/restore.sh.tmp"
+sed "s|EFI_MOUNT_POINT=\"/Volumes/EFI\"|EFI_MOUNT_POINT=\"$RUNTIME_MOCK_VOLUMES/EFI\"|g" "$TEST_DIR/restore.sh" >"$TEST_DIR/restore.sh.tmp"
 mv "$TEST_DIR/restore.sh.tmp" "$TEST_DIR/restore.sh"
 
 # Replace /Volumes/EFI_BACKUP with our mock path
 # We replace the whole line prefix
-sed "s|BACKUP_DIR=\"/Volumes/EFI_BACKUP_|BACKUP_DIR=\"$RUNTIME_MOCK_VOLUMES/EFI_BACKUP_|g" "$TEST_DIR/restore.sh" > "$TEST_DIR/restore.sh.tmp"
+sed "s|BACKUP_DIR=\"/Volumes/EFI_BACKUP_|BACKUP_DIR=\"$RUNTIME_MOCK_VOLUMES/EFI_BACKUP_|g" "$TEST_DIR/restore.sh" >"$TEST_DIR/restore.sh.tmp"
 mv "$TEST_DIR/restore.sh.tmp" "$TEST_DIR/restore.sh"
 
 chmod +x "$TEST_DIR/restore.sh"
 
 # Also update the mock mount script to return the path relative to CWD or absolute
 # Since we are inside TEST_DIR, ./Volumes/EFI is correct.
-cat << EOF > "$MOCK_BIN/mount"
+cat <<EOF >"$MOCK_BIN/mount"
 #!/bin/sh
 echo "/dev/disk0s1 on $RUNTIME_MOCK_VOLUMES/EFI (msdos, local, nodev, nosuid, noowners)"
 EOF
@@ -132,7 +132,7 @@ chmod +x "$MOCK_BIN/mount"
 
 # Run the script
 # We pipe "y" to confirm the prompt, and "enter" for the final prompt
-cd "$TEST_DIR"
+cd "$TEST_DIR" || exit 1
 printf "y\n\n" | ./restore.sh
 
 EXIT_CODE=$?

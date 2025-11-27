@@ -20,7 +20,7 @@
 #
 # Author: supermarsx
 # Repository: https://github.com/supermarsx/opencore-restore
-# License: MIT 
+# License: MIT
 #
 # ==============================================================================
 
@@ -46,16 +46,16 @@ NC=$(printf '\033[0m') # No Color
 # Helper functions to print standardized status messages.
 
 # log_info: Prints an informational message in blue.
-log_info()    { printf "${BLUE}[INFO]${NC} %s\n" "$1"; }
+log_info() { printf "${BLUE}[INFO]${NC} %s\n" "$1"; }
 
 # log_success: Prints a success message in green.
 log_success() { printf "${GREEN}[ OK ]${NC} %s\n" "$1"; }
 
 # log_warn: Prints a warning message in yellow.
-log_warn()    { printf "${YELLOW}[WARN]${NC} %s\n" "$1"; }
+log_warn() { printf "${YELLOW}[WARN]${NC} %s\n" "$1"; }
 
 # log_error: Prints an error message in red.
-log_error()   { printf "${RED}[FAIL]${NC} %s\n" "$1"; }
+log_error() { printf "${RED}[FAIL]${NC} %s\n" "$1"; }
 
 # header: Clears the screen and prints the script banner.
 header() {
@@ -111,16 +111,16 @@ else
         # Note: diskutil info might fail in minimal sh environments, but usually present in Recovery.
         NODE_INFO=$(diskutil info "$disk" | grep "Device Node" | awk '{print $3}')
         printf "  [%d] ${YELLOW}%s${NC} (%s)\n" "$i" "$disk" "$NODE_INFO"
-        i=$((i+1))
+        i=$((i + 1))
     done
     
     printf "\n"
-    printf "Select partition number [0-$((COUNT-1))]: "
+    printf "Select partition number [0-$((COUNT - 1))]: "
     read -r SELECTION
     
     # Validate selection is a number
     case "$SELECTION" in
-        ''|*[!0-9]*) 
+        '' | *[!0-9]*)
             log_error "Invalid selection."
             exit 1 
             ;;
@@ -138,7 +138,7 @@ else
             TARGET_DISK=$disk
             break
         fi
-        i=$((i+1))
+        i=$((i + 1))
     done
 fi
 
@@ -236,6 +236,7 @@ printf "Please perform a COLD BOOT (Power button) after shutdown.\n"
 printf "\n"
 printf "Press Enter to clear NVRAM and Shutdown..."
 read -r DUMMY
+: "$DUMMY"
 
 log_info "Clearing NVRAM..."
 nvram -c
