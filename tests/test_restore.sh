@@ -58,9 +58,10 @@ EOF
 chmod +x "$MOCK_BIN/diskutil"
 
 # Mock mount (for check)
-cat << EOF > "$MOCK_BIN/mount"
+# Will be overwritten later with correct path
+cat << 'EOF' > "$MOCK_BIN/mount"
 #!/bin/sh
-echo "/dev/disk0s1 on $MOCK_VOLUMES/EFI (msdos, local, nodev, nosuid, noowners)"
+echo "mount mock"
 EOF
 chmod +x "$MOCK_BIN/mount"
 
@@ -82,12 +83,7 @@ chmod +x "$MOCK_BIN/shutdown"
 
 echo "Running restore.sh in test environment..."
 
-# We need to modify restore.sh slightly to run in our test env (paths)
-# or we can just symlink our mock repo to where the script expects it.
-# The script expects ./BOOTEFIX64/EFI relative to CWD.
-
 # Copy restore.sh to test dir
-# We assume restore.sh is in the parent directory
 if [ ! -f "../restore.sh" ]; then
     echo "Error: ../restore.sh not found!"
     exit 1
@@ -115,12 +111,16 @@ RUNTIME_MOCK_VOLUMES="./Volumes"
 
 # Replace /Volumes/EFI with our mock path
 # Use | as delimiter to avoid escaping slashes
-sed "s|/Volumes/EFI|$RUNTIME_MOCK_VOLUMES/EFI|g" "$TEST_DIR/restore.sh" > "$TEST_DIR/restore.sh.tmp"
+# We replace the whole line to be safe
+sed "s|EFI_MOUNT_POINT=\"/Volumes/EFI\"|EFI_MOUNT_POINT=\"$RUNTIME_MOCK_VOLUMES/EFI\"|g" "$TEST_DIR/restore.sh" > "$TEST_DIR/restore.sh.tmp"
 mv "$TEST_DIR/restore.sh.tmp" "$TEST_DIR/restore.sh"
 
 # Replace /Volumes/EFI_BACKUP with our mock path
-sed "s|/Volumes/EFI_BACKUP|$RUNTIME_MOCK_VOLUMES/EFI_BACKUP|g" "$TEST_DIR/restore.sh" > "$TEST_DIR/restore.sh.tmp"
+# We replace the whole line prefix
+sed "s|BACKUP_DIR=\"/Volumes/EFI_BACKUP_|BACKUP_DIR=\"$RUNTIME_MOCK_VOLUMES/EFI_BACKUP_|g" "$TEST_DIR/restore.sh" > "$TEST_DIR/restore.sh.tmp"
 mv "$TEST_DIR/restore.sh.tmp" "$TEST_DIR/restore.sh"
+
+chmod +x "$TEST_DIR/restore.sh"
 
 # Also update the mock mount script to return the path relative to CWD or absolute
 # Since we are inside TEST_DIR, ./Volumes/EFI is correct.
@@ -129,8 +129,6 @@ cat << EOF > "$MOCK_BIN/mount"
 echo "/dev/disk0s1 on $RUNTIME_MOCK_VOLUMES/EFI (msdos, local, nodev, nosuid, noowners)"
 EOF
 chmod +x "$MOCK_BIN/mount"
-
-chmod +x "$TEST_DIR/restore.sh"
 
 # Run the script
 # We pipe "y" to confirm the prompt, and "enter" for the final prompt
